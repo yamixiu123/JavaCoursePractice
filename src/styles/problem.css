@@ -1,0 +1,537 @@
+/* ===================================
+   做题页样式
+   =================================== */
+
+/* 主工作区 */
+.workspace {
+    display: flex;
+    height: calc(100vh - var(--navbar-height));
+    margin-top: var(--navbar-height);
+    overflow: hidden;
+}
+
+/* 面板 */
+.panel {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.panel--description {
+    width: 45%;
+    min-width: 300px;
+    border-right: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.panel--editor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--space-md);
+    height: 42px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    flex-shrink: 0;
+}
+
+.panel-tabs {
+    display: flex;
+    gap: 2px;
+}
+
+.panel-tab {
+    padding: var(--space-sm) var(--space-md);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.panel-tab:hover {
+    color: var(--text-secondary);
+}
+
+.panel-tab.active {
+    color: var(--accent-green);
+    background: rgba(0, 245, 160, 0.08);
+}
+
+.panel-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-lg);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+/* 题目描述 */
+.problem-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+    flex-wrap: wrap;
+}
+
+.problem-description {
+    font-size: 0.92rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-lg);
+}
+
+.problem-description h2,
+.problem-description h3 {
+    color: var(--text-primary);
+    margin: var(--space-lg) 0 var(--space-sm);
+    font-size: 1rem;
+}
+
+.problem-description p {
+    margin-bottom: var(--space-md);
+}
+
+.problem-description code {
+    font-family: var(--font-mono);
+    background: rgba(0, 245, 160, 0.08);
+    color: var(--accent-green);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+}
+
+.problem-description pre {
+    background: var(--bg-primary);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-sm);
+    padding: var(--space-md);
+    margin: var(--space-md) 0;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+.problem-description pre code {
+    background: none;
+    padding: 0;
+    color: var(--text-primary);
+}
+
+.problem-description ul,
+.problem-description ol {
+    padding-left: var(--space-lg);
+    margin-bottom: var(--space-md);
+}
+
+.problem-description li {
+    margin-bottom: var(--space-xs);
+}
+
+/* 示例 */
+.problem-examples {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.example-card {
+    background: var(--bg-primary);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.example-header {
+    padding: var(--space-sm) var(--space-md);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent-blue);
+    background: rgba(0, 217, 245, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.example-body {
+    padding: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: 0.84rem;
+    line-height: 1.7;
+}
+
+.example-row {
+    display: flex;
+    gap: var(--space-md);
+    margin-bottom: var(--space-sm);
+}
+
+.example-label {
+    color: var(--text-muted);
+    min-width: 36px;
+    font-weight: 500;
+}
+
+.example-value {
+    color: var(--text-primary);
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+/* 提示 */
+.hints-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.hint-item {
+    padding: var(--space-md);
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--accent-yellow);
+}
+
+.hint-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    width: 100%;
+    padding: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-yellow);
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-align: left;
+}
+
+.hint-content {
+    margin-top: var(--space-md);
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    display: none;
+}
+
+.hint-content.visible {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+/* 拖拽分隔条（水平） */
+.resizer {
+    width: 5px;
+    cursor: col-resize;
+    background: transparent;
+    flex-shrink: 0;
+    position: relative;
+    transition: background var(--transition-fast);
+}
+
+.resizer::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 3px;
+    height: 40px;
+    background: var(--bg-tertiary);
+    border-radius: 2px;
+    transition: all var(--transition-fast);
+}
+
+.resizer:hover::after,
+.resizer.active::after {
+    background: var(--accent-green);
+    height: 60px;
+    box-shadow: var(--shadow-glow-green);
+}
+
+/* 拖拽分隔条（垂直） */
+.resizer-h {
+    height: 5px;
+    cursor: row-resize;
+    background: transparent;
+    flex-shrink: 0;
+    position: relative;
+    transition: background var(--transition-fast);
+}
+
+.resizer-h::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 3px;
+    background: var(--bg-tertiary);
+    border-radius: 2px;
+    transition: all var(--transition-fast);
+}
+
+.resizer-h:hover::after,
+.resizer-h.active::after {
+    background: var(--accent-green);
+    width: 60px;
+}
+
+/* 编辑器部分 */
+.editor-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 200px;
+}
+
+.editor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-md);
+    height: 42px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    flex-shrink: 0;
+}
+
+.editor-lang {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--accent-orange);
+    font-family: var(--font-mono);
+}
+
+.editor-actions {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.editor-container {
+    flex: 1;
+    overflow: hidden;
+}
+
+.editor-container .cm-editor {
+    height: 100%;
+    font-size: 14px;
+}
+
+.editor-container .cm-scroller {
+    font-family: var(--font-mono) !important;
+}
+
+.editor-container .cm-gutters {
+    background: var(--bg-secondary) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.04) !important;
+}
+
+.editor-container .cm-activeLineGutter {
+    background: rgba(0, 245, 160, 0.05) !important;
+}
+
+.editor-container .cm-activeLine {
+    background: rgba(0, 245, 160, 0.03) !important;
+}
+
+/* 结果面板 */
+.result-section {
+    height: 200px;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.result-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-md);
+    height: 36px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    flex-shrink: 0;
+}
+
+.result-title {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.result-status {
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+}
+
+.result-status--ac {
+    color: var(--easy);
+}
+
+.result-status--wa {
+    color: var(--hard);
+}
+
+.result-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-md);
+}
+
+.result-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+/* 测试用例结果 */
+.test-case-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.test-case {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    font-size: 0.84rem;
+    font-family: var(--font-mono);
+    animation: slideIn 0.3s ease forwards;
+}
+
+.test-case__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.test-case__detail {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.test-case__line {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.test-case__label {
+    color: var(--text-muted);
+    min-width: 50px;
+}
+
+.test-case__value {
+    color: var(--text-primary);
+}
+
+.test-case--pass {
+    border-left: 3px solid var(--easy);
+}
+
+.test-case--fail {
+    border-left: 3px solid var(--hard);
+}
+
+/* 庆祝弹窗 */
+.celebration-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-overlay);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+}
+
+.celebration-overlay.visible {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.celebration-modal {
+    background: var(--bg-secondary);
+    border: 1px solid rgba(0, 245, 160, 0.15);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    text-align: center;
+    box-shadow: var(--shadow-lg), var(--shadow-glow-green);
+    animation: fadeInUp 0.4s ease;
+    max-width: 400px;
+}
+
+.celebration-icon {
+    font-size: 4rem;
+    margin-bottom: var(--space-md);
+}
+
+.celebration-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: var(--gradient-success);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--space-sm);
+}
+
+.celebration-text {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: var(--space-lg);
+}
+
+.celebration-actions {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .workspace {
+        flex-direction: column;
+    }
+
+    .panel--description {
+        width: 100% !important;
+        min-width: unset;
+        height: 40vh;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .resizer {
+        display: none;
+    }
+
+    .editor-actions .action-btn span:last-child {
+        display: none;
+    }
+}

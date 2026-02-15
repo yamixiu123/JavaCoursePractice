@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JavaOJ - Java 在线练习平台</title>
+  <meta name="description" content="JavaOJ 是一个面向 Java 学习者的在线编程练习平台，提供从基础到进阶的编程题目。" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/styles/global.css" />
+  <link rel="stylesheet" href="/src/styles/problem-list.css" />
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="nav-logo">
+        <span class="logo-icon">⟨/⟩</span>
+        <span class="logo-text">Java<span class="logo-highlight">OJ</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="/" class="nav-link active">
+          <span class="nav-icon">📋</span>题目
+        </a>
+        <a href="/stats.html" class="nav-link">
+          <span class="nav-icon">📊</span>统计
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主页面 -->
+  <main class="main-container">
+    <!-- 头部统计 -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <h1 class="hero-title">Java 编程练习</h1>
+        <p class="hero-subtitle">从基础语法到算法挑战，系统性提升你的 Java 编程能力</p>
+      </div>
+      <div class="stats-cards">
+        <div class="stat-card">
+          <span class="stat-value" id="total-count">0</span>
+          <span class="stat-label">总题数</span>
+        </div>
+        <div class="stat-card stat-card--success">
+          <span class="stat-value" id="solved-count">0</span>
+          <span class="stat-label">已通过</span>
+        </div>
+        <div class="stat-card stat-card--rate">
+          <span class="stat-value" id="pass-rate">0%</span>
+          <span class="stat-label">通过率</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 筛选 -->
+    <section class="filter-section">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="搜索题目..." class="search-input" />
+      </div>
+      <div class="filter-group">
+        <button class="filter-btn active" data-difficulty="all">全部</button>
+        <button class="filter-btn" data-difficulty="easy">
+          <span class="diff-dot diff-dot--easy"></span>简单
+        </button>
+        <button class="filter-btn" data-difficulty="medium">
+          <span class="diff-dot diff-dot--medium"></span>中等
+        </button>
+        <button class="filter-btn" data-difficulty="hard">
+          <span class="diff-dot diff-dot--hard"></span>困难
+        </button>
+      </div>
+      <div class="tag-filter" id="tag-filter"></div>
+    </section>
+
+    <!-- 题目列表 -->
+    <section class="problem-list" id="problem-list">
+      <!-- JS 动态渲染 -->
+    </section>
+  </main>
+
+  <script type="module" src="/src/js/problem-list.js"></script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+/* ===================================
+   统计页样式
+   =================================== */
+
+/* 概览网格 */
+.overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    animation: fadeInUp 0.5s ease;
+}
+
+.overview-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    transition: all var(--transition-normal);
+}
+
+.overview-card:hover {
+    border-color: rgba(0, 245, 160, 0.1);
+    box-shadow: var(--shadow-glow-green);
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-md);
+    align-self: flex-start;
+}
+
+/* 进度环 */
+.overview-ring {
+    position: relative;
+}
+
+.overview-info {
+    text-align: center;
+}
+
+.overview-value {
+    font-size: 2.2rem;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    background: var(--gradient-main);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.overview-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* 难度柱状图 */
+.difficulty-bars {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    width: 100%;
+}
+
+.diff-bar-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.diff-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    min-width: 50px;
+}
+
+.diff-label--easy {
+    color: var(--easy);
+}
+
+.diff-label--medium {
+    color: var(--medium);
+}
+
+.diff-label--hard {
+    color: var(--hard);
+}
+
+.diff-bar-track {
+    flex: 1;
+    height: 10px;
+    background: var(--bg-primary);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.diff-bar {
+    height: 100%;
+    border-radius: 5px;
+    transition: width 1s ease;
+}
+
+.diff-bar--easy {
+    background: linear-gradient(90deg, var(--easy), #4ade80);
+}
+
+.diff-bar--medium {
+    background: linear-gradient(90deg, var(--medium), #f59e0b);
+}
+
+.diff-bar--hard {
+    background: linear-gradient(90deg, var(--hard), #ef4444);
+}
+
+.diff-count {
+    font-size: 0.82rem;
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+    min-width: 36px;
+    text-align: right;
+}
+
+/* 热力图 */
+.heatmap-section {
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    margin-bottom: var(--space-xl);
+    animation: fadeInUp 0.5s ease 0.1s both;
+}
+
+.heatmap-container {
+    overflow-x: auto;
+}
+
+.heatmap-months {
+    display: flex;
+    gap: 0;
+    margin-bottom: var(--space-xs);
+    padding-left: 2px;
+}
+
+.heatmap-months span {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    min-width: 44px;
+}
+
+.heatmap-grid {
+    display: flex;
+    gap: 3px;
+}
+
+.heatmap-week {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.heatmap-cell {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    transition: all var(--transition-fast);
+}
+
+.heatmap-cell:hover {
+    transform: scale(1.4);
+    outline: 2px solid var(--accent-green);
+}
+
+.heatmap-cell--0 {
+    background: var(--bg-tertiary);
+}
+
+.heatmap-cell--1 {
+    background: rgba(0, 245, 160, 0.15);
+}
+
+.heatmap-cell--2 {
+    background: rgba(0, 245, 160, 0.35);
+}
+
+.heatmap-cell--3 {
+    background: rgba(0, 245, 160, 0.55);
+}
+
+.heatmap-cell--4 {
+    background: rgba(0, 245, 160, 0.8);
+}
+
+.heatmap-legend {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    justify-content: flex-end;
+    margin-top: var(--space-md);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.heatmap-legend .heatmap-cell {
+    width: 10px;
+    height: 10px;
+}
+
+/* 提交历史 */
+.history-section {
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    animation: fadeInUp 0.5s ease 0.2s both;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.history-item {
+    display: grid;
+    grid-template-columns: 28px 1fr auto auto;
+    gap: var(--space-md);
+    align-items: center;
+    padding: var(--space-md);
+    background: var(--bg-primary);
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    transition: all var(--transition-fast);
+}
+
+.history-item:hover {
+    background: var(--bg-tertiary);
+}
+
+.history-item__icon {
+    font-size: 1rem;
+}
+
+.history-item__title {
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.history-item__time {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .overview-grid {
+        grid-template-columns: 1fr;
+    }
+}

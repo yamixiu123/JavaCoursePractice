@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>做题 - JavaOJ</title>
+    <meta name="description" content="在线编写和运行 Java 代码，提交你的解答。" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles/global.css" />
+    <link rel="stylesheet" href="/src/styles/problem.css" />
+</head>
+
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar--compact">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <span class="logo-icon">⟨/⟩</span>
+                <span class="logo-text">Java<span class="logo-highlight">OJ</span></span>
+            </a>
+            <div class="problem-nav-info">
+                <button class="nav-btn" id="prev-btn" title="上一题">◀</button>
+                <span class="problem-nav-title" id="problem-title">加载中...</span>
+                <button class="nav-btn" id="next-btn" title="下一题">▶</button>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">
+                    <span class="nav-icon">📋</span>题库
+                </a>
+                <a href="/stats.html" class="nav-link">
+                    <span class="nav-icon">📊</span>统计
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主面板 -->
+    <main class="workspace">
+        <!-- 左侧：题目描述 -->
+        <div class="panel panel--description" id="description-panel">
+            <div class="panel-header">
+                <div class="panel-tabs">
+                    <button class="panel-tab active" data-tab="description">题目描述</button>
+                    <button class="panel-tab" data-tab="hints">提示</button>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="tab-content active" id="tab-description">
+                    <div class="problem-meta" id="problem-meta"></div>
+                    <div class="problem-description" id="problem-description"></div>
+                    <div class="problem-examples" id="problem-examples"></div>
+                </div>
+                <div class="tab-content" id="tab-hints">
+                    <div class="hints-list" id="hints-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 拖拽分隔条 -->
+        <div class="resizer" id="resizer"></div>
+
+        <!-- 右侧：编辑器 + 结果 -->
+        <div class="panel panel--editor" id="editor-panel">
+            <!-- 代码编辑器 -->
+            <div class="editor-section">
+                <div class="editor-header">
+                    <span class="editor-lang">Java</span>
+                    <div class="editor-actions">
+                        <button class="action-btn action-btn--reset" id="reset-btn" title="重置代码">
+                            <span>↻</span> 重置
+                        </button>
+                        <button class="action-btn action-btn--run" id="run-btn" title="运行代码">
+                            <span>▶</span> 运行
+                        </button>
+                        <button class="action-btn action-btn--submit" id="submit-btn" title="提交">
+                            <span>✓</span> 提交
+                        </button>
+                    </div>
+                </div>
+                <div class="editor-container" id="editor-container"></div>
+            </div>
+
+            <!-- 垂直拖拽条 -->
+            <div class="resizer-h" id="resizer-h"></div>
+
+            <!-- 结果面板 -->
+            <div class="result-section" id="result-section">
+                <div class="result-header">
+                    <span class="result-title">运行结果</span>
+                    <span class="result-status" id="result-status"></span>
+                </div>
+                <div class="result-body" id="result-body">
+                    <div class="result-placeholder">点击"运行"或"提交"查看结果</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 提交成功庆祝弹窗 -->
+    <div class="celebration-overlay" id="celebration-overlay">
+        <div class="celebration-modal">
+            <div class="celebration-icon">🎉</div>
+            <h2 class="celebration-title">通过！</h2>
+            <p class="celebration-text" id="celebration-text"></p>
+            <div class="celebration-actions">
+                <button class="action-btn action-btn--run" id="celebration-next">下一题 →</button>
+                <button class="action-btn" id="celebration-close">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/src/js/problem.js"></script>
+</body>
+
+</html>

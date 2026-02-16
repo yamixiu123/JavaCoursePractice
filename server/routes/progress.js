@@ -9,19 +9,36 @@ const { requireAuth } = require('../auth');
 
 const router = express.Router();
 router.use(requireAuth);
+const VALID_STATUS = new Set(['accepted', 'wrong']);
+const MAX_CODE_LENGTH = 100000;
+const MAX_PROBLEM_ID = 10000;
 
 /** 上报提交结果 */
 router.post('/submit', (req, res) => {
     const { problemId, status, code } = req.body;
 
-    if (!problemId || !status) {
-        return res.status(400).json({ error: '缺少 problemId 或 status' });
+    const normalizedProblemId = Number(problemId);
+    if (!Number.isInteger(normalizedProblemId) || normalizedProblemId <= 0 || normalizedProblemId > MAX_PROBLEM_ID) {
+        return res.status(400).json({ error: 'problemId 必须是有效正整数' });
+    }
+
+    if (!VALID_STATUS.has(status)) {
+        return res.status(400).json({ error: 'status 仅支持 accepted 或 wrong' });
+    }
+
+    if (code !== undefined && typeof code !== 'string') {
+        return res.status(400).json({ error: 'code 必须是字符串' });
+    }
+
+    const safeCode = typeof code === 'string' ? code : '';
+    if (safeCode.length > MAX_CODE_LENGTH) {
+        return res.status(400).json({ error: `code 长度不能超过 ${MAX_CODE_LENGTH} 字符` });
     }
 
     const db = getDb();
     db.prepare(
         'INSERT INTO submissions (user_id, problem_id, status, code) VALUES (?, ?, ?, ?)'
-    ).run(req.user.id, problemId, status, code || '');
+    ).run(req.user.id, normalizedProblemId, status, safeCode);
 
     res.json({ message: '提交成功' });
 });

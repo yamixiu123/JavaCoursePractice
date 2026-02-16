@@ -8,7 +8,7 @@ import { oneDark } from '@codemirror/theme-one-dark';
 import { EditorState } from '@codemirror/state';
 import { problems, getProblemById } from './problems.js';
 import { judge } from './judge.js';
-import { getMyProgress, requireStudentAuth, submitProgress } from './api.js';
+import { getMyProgress, requireStudentAuth, submitProgress, logout } from './api.js';
 import {
     getSolvedSet, markSolved, markAttempted,
     addHistory, saveCode, getSavedCode,
@@ -22,6 +22,7 @@ async function init() {
     const user = requireStudentAuth();
     if (!user) return;
 
+    setupNav(user);
     await loadSolvedState();
 
     const id = Number(new URLSearchParams(window.location.search).get('id')) || 1;
@@ -328,6 +329,18 @@ function showCelebration() {
 
 function closeCelebration() {
     document.getElementById('celebration-overlay').classList.remove('visible');
+}
+
+function setupNav(user) {
+    const navUser = document.getElementById('nav-user');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    if (navUser) {
+        navUser.textContent = user.displayName || user.username || '学生';
+    }
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', logout);
+    }
 }
 
 /** 简易 Markdown 渲染 */

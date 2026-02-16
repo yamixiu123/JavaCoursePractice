@@ -2,43 +2,45 @@
    统计页样式
    =================================== */
 
-/* 概览网格 */
 .overview-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(260px, 0.9fr) minmax(300px, 1.1fr);
     gap: var(--space-lg);
     margin-bottom: var(--space-xl);
-    animation: fadeInUp 0.5s ease;
+    animation: fadeInUp 0.48s ease;
 }
 
 .overview-card {
-    background: var(--bg-card);
-    border: 1px solid rgba(255, 255, 255, 0.04);
+    padding: clamp(18px, 3vw, 28px);
     border-radius: var(--radius-lg);
-    padding: var(--space-xl);
+    border: 1px solid rgba(142, 169, 198, 0.24);
+    background: linear-gradient(150deg, rgba(16, 30, 45, 0.92), rgba(11, 22, 34, 0.84));
+    box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-md);
+    gap: 12px;
     transition: all var(--transition-normal);
 }
 
 .overview-card:hover {
-    border-color: rgba(0, 245, 160, 0.1);
-    box-shadow: var(--shadow-glow-green);
+    transform: translateY(-2px);
+    border-color: rgba(41, 185, 242, 0.4);
+    box-shadow: var(--shadow-md);
 }
 
 .card-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: var(--space-md);
     align-self: flex-start;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
 }
 
-/* 进度环 */
 .overview-ring {
     position: relative;
+    display: grid;
+    place-items: center;
 }
 
 .overview-info {
@@ -46,13 +48,10 @@
 }
 
 .overview-value {
-    font-size: 2.2rem;
-    font-weight: 800;
     font-family: var(--font-mono);
-    background: var(--gradient-main);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-size: 2.15rem;
+    font-weight: 700;
+    color: #d8f5ff;
 }
 
 .overview-label {
@@ -60,24 +59,23 @@
     color: var(--text-secondary);
 }
 
-/* 难度柱状图 */
 .difficulty-bars {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
-    width: 100%;
+    gap: 12px;
 }
 
 .diff-bar-row {
     display: flex;
     align-items: center;
-    gap: var(--space-md);
+    gap: 12px;
 }
 
 .diff-label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    min-width: 50px;
+    min-width: 54px;
+    font-size: 0.84rem;
+    font-weight: 700;
 }
 
 .diff-label--easy {
@@ -95,55 +93,66 @@
 .diff-bar-track {
     flex: 1;
     height: 10px;
-    background: var(--bg-primary);
-    border-radius: 5px;
+    border-radius: 999px;
     overflow: hidden;
+    background: rgba(10, 18, 29, 0.9);
+    border: 1px solid rgba(142, 169, 198, 0.2);
 }
 
 .diff-bar {
     height: 100%;
-    border-radius: 5px;
-    transition: width 1s ease;
+    border-radius: 999px;
+    transition: width 0.9s ease;
 }
 
 .diff-bar--easy {
-    background: linear-gradient(90deg, var(--easy), #4ade80);
+    background: linear-gradient(90deg, #6edc86, #a1e9b0);
 }
 
 .diff-bar--medium {
-    background: linear-gradient(90deg, var(--medium), #f59e0b);
+    background: linear-gradient(90deg, #ffb65f, #ffd48b);
 }
 
 .diff-bar--hard {
-    background: linear-gradient(90deg, var(--hard), #ef4444);
+    background: linear-gradient(90deg, #ff7a7a, #ff9b9b);
 }
 
 .diff-count {
-    font-size: 0.82rem;
-    font-family: var(--font-mono);
-    color: var(--text-secondary);
-    min-width: 36px;
+    min-width: 44px;
     text-align: right;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
 }
 
-/* 热力图 */
-.heatmap-section {
-    background: var(--bg-card);
-    border: 1px solid rgba(255, 255, 255, 0.04);
+.heatmap-section,
+.history-section {
     border-radius: var(--radius-lg);
-    padding: var(--space-xl);
+    border: 1px solid rgba(142, 169, 198, 0.24);
+    background: linear-gradient(145deg, rgba(16, 30, 45, 0.9), rgba(11, 22, 34, 0.82));
+    padding: clamp(18px, 3vw, 28px);
     margin-bottom: var(--space-xl);
-    animation: fadeInUp 0.5s ease 0.1s both;
+    box-shadow: var(--shadow-sm);
+}
+
+.heatmap-section {
+    animation: fadeInUp 0.5s ease 0.08s both;
+}
+
+.history-section {
+    animation: fadeInUp 0.5s ease 0.16s both;
+    margin-bottom: 0;
 }
 
 .heatmap-container {
     overflow-x: auto;
+    padding-bottom: 4px;
 }
 
 .heatmap-months {
     display: flex;
     gap: 0;
-    margin-bottom: var(--space-xs);
+    margin-bottom: 6px;
     padding-left: 2px;
 }
 
@@ -155,53 +164,54 @@
 
 .heatmap-grid {
     display: flex;
-    gap: 3px;
+    gap: 4px;
 }
 
 .heatmap-week {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 4px;
 }
 
 .heatmap-cell {
     width: 12px;
     height: 12px;
-    border-radius: 2px;
-    transition: all var(--transition-fast);
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    transition: transform var(--transition-fast), border-color var(--transition-fast);
 }
 
 .heatmap-cell:hover {
-    transform: scale(1.4);
-    outline: 2px solid var(--accent-green);
+    transform: scale(1.35);
+    border-color: rgba(255, 255, 255, 0.35);
 }
 
 .heatmap-cell--0 {
-    background: var(--bg-tertiary);
+    background: rgba(109, 131, 156, 0.24);
 }
 
 .heatmap-cell--1 {
-    background: rgba(0, 245, 160, 0.15);
+    background: rgba(59, 211, 142, 0.24);
 }
 
 .heatmap-cell--2 {
-    background: rgba(0, 245, 160, 0.35);
+    background: rgba(59, 211, 142, 0.43);
 }
 
 .heatmap-cell--3 {
-    background: rgba(0, 245, 160, 0.55);
+    background: rgba(59, 211, 142, 0.62);
 }
 
 .heatmap-cell--4 {
-    background: rgba(0, 245, 160, 0.8);
+    background: rgba(59, 211, 142, 0.84);
 }
 
 .heatmap-legend {
+    margin-top: 12px;
     display: flex;
-    align-items: center;
-    gap: var(--space-xs);
     justify-content: flex-end;
-    margin-top: var(--space-md);
+    align-items: center;
+    gap: 6px;
     font-size: 0.72rem;
     color: var(--text-muted);
 }
@@ -211,60 +221,63 @@
     height: 10px;
 }
 
-/* 提交历史 */
-.history-section {
-    background: var(--bg-card);
-    border: 1px solid rgba(255, 255, 255, 0.04);
-    border-radius: var(--radius-lg);
-    padding: var(--space-xl);
-    animation: fadeInUp 0.5s ease 0.2s both;
-}
-
 .history-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
-    max-height: 400px;
+    gap: 9px;
+    max-height: 420px;
     overflow-y: auto;
 }
 
 .history-item {
     display: grid;
-    grid-template-columns: 28px 1fr auto auto;
-    gap: var(--space-md);
+    grid-template-columns: 28px minmax(0, 1fr) auto auto;
     align-items: center;
-    padding: var(--space-md);
-    background: var(--bg-primary);
-    border-radius: var(--radius-sm);
-    font-size: 0.88rem;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(142, 169, 198, 0.2);
+    background: rgba(9, 19, 30, 0.72);
+    font-size: 0.86rem;
     transition: all var(--transition-fast);
+    cursor: pointer;
 }
 
 .history-item:hover {
-    background: var(--bg-tertiary);
+    border-color: rgba(41, 185, 242, 0.4);
+    background: rgba(13, 24, 37, 0.86);
 }
 
 .history-item__icon {
-    font-size: 1rem;
+    font-size: 0.95rem;
 }
 
 .history-item__title {
-    font-weight: 500;
-    color: var(--text-primary);
+    font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .history-item__time {
-    font-size: 0.78rem;
-    color: var(--text-muted);
     font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--text-muted);
 }
 
-/* 响应式 */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .overview-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .history-item {
+        grid-template-columns: 24px minmax(0, 1fr) auto;
+        gap: 8px;
+    }
+
+    .history-item__time {
+        display: none;
     }
 }

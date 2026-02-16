@@ -2,30 +2,36 @@
    题目列表页样式
    =================================== */
 
-/* 英雄区域 */
 .hero-section {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-xl);
     align-items: center;
-    justify-content: space-between;
-    padding: var(--space-xl) 0;
-    margin-bottom: var(--space-lg);
-    animation: fadeInUp 0.6s ease;
+    margin-bottom: var(--space-xl);
+    padding: clamp(18px, 3.5vw, 32px);
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(137, 168, 205, 0.28);
+    background: linear-gradient(145deg, rgba(16, 31, 48, 0.82) 0%, rgba(10, 21, 35, 0.76) 55%, rgba(14, 29, 44, 0.85) 100%);
+    box-shadow: var(--shadow-md);
+    animation: fadeInUp 0.5s ease;
+}
+
+.hero-content {
+    min-width: 0;
 }
 
 .hero-title {
-    font-size: 2.2rem;
-    font-weight: 800;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.9rem);
+    line-height: 1.15;
+    letter-spacing: 0.8px;
     margin-bottom: var(--space-sm);
-    background: var(--gradient-main);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 .hero-subtitle {
     color: var(--text-secondary);
-    font-size: 1rem;
-    max-width: 400px;
+    font-size: 0.98rem;
+    max-width: 48ch;
 }
 
 .stats-cards {
@@ -37,40 +43,43 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: var(--space-md) var(--space-lg);
-    background: var(--bg-card);
+    justify-content: center;
+    min-width: 112px;
+    padding: 14px 18px;
     border-radius: var(--radius-md);
-    border: 1px solid rgba(255, 255, 255, 0.04);
-    min-width: 90px;
+    border: 1px solid rgba(154, 178, 206, 0.24);
+    background: linear-gradient(180deg, rgba(24, 38, 57, 0.9) 0%, rgba(17, 30, 46, 0.8) 100%);
     transition: all var(--transition-normal);
 }
 
 .stat-card:hover {
-    border-color: rgba(0, 245, 160, 0.15);
-    box-shadow: var(--shadow-glow-green);
     transform: translateY(-2px);
+    border-color: rgba(59, 211, 142, 0.4);
+    box-shadow: var(--shadow-glow-green);
+}
+
+.stat-card--success:hover {
+    border-color: rgba(59, 211, 142, 0.45);
+}
+
+.stat-card--rate:hover {
+    border-color: rgba(41, 185, 242, 0.45);
+    box-shadow: var(--shadow-glow-blue);
 }
 
 .stat-value {
-    font-size: 1.6rem;
-    font-weight: 700;
     font-family: var(--font-mono);
-    background: var(--gradient-main);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: #d8f5ff;
 }
 
 .stat-card--success .stat-value {
-    background: var(--gradient-success);
-    -webkit-background-clip: text;
-    background-clip: text;
+    color: #c8ffe1;
 }
 
 .stat-card--rate .stat-value {
-    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-    -webkit-background-clip: text;
-    background-clip: text;
+    color: #c9edff;
 }
 
 .stat-label {
@@ -79,43 +88,42 @@
     margin-top: 2px;
 }
 
-/* 筛选区域 */
 .filter-section {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
     gap: var(--space-md);
+    align-items: center;
     margin-bottom: var(--space-lg);
-    animation: fadeInUp 0.6s ease 0.1s both;
+    animation: fadeInUp 0.55s ease 0.08s both;
 }
 
 .search-box {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
-    padding: var(--space-sm) var(--space-md);
-    background: var(--bg-card);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: var(--radius-md);
     flex: 1;
-    min-width: 200px;
-    max-width: 360px;
-    transition: border-color var(--transition-fast);
+    min-width: 240px;
+    max-width: 440px;
+    padding: 11px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(144, 169, 196, 0.24);
+    background: rgba(11, 23, 36, 0.72);
+    transition: all var(--transition-fast);
 }
 
 .search-box:focus-within {
-    border-color: rgba(0, 245, 160, 0.3);
-    box-shadow: var(--shadow-glow-green);
+    border-color: rgba(41, 185, 242, 0.5);
+    box-shadow: var(--shadow-glow-blue);
 }
 
 .search-icon {
-    font-size: 0.9rem;
-    opacity: 0.5;
+    font-size: 0.92rem;
+    opacity: 0.72;
 }
 
 .search-input {
     flex: 1;
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     color: var(--text-primary);
 }
 
@@ -125,39 +133,40 @@
 
 .filter-group {
     display: flex;
-    gap: var(--space-xs);
-    background: var(--bg-card);
-    padding: 3px;
+    gap: 4px;
+    padding: 4px;
     border-radius: var(--radius-md);
-    border: 1px solid rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(144, 169, 196, 0.24);
+    background: rgba(9, 18, 28, 0.74);
 }
 
 .filter-btn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: var(--space-sm) var(--space-md);
-    border-radius: var(--radius-sm);
-    font-size: 0.85rem;
-    font-weight: 500;
+    gap: 6px;
+    padding: 8px 13px;
+    border-radius: 9px;
+    font-size: 0.84rem;
+    font-weight: 600;
     color: var(--text-secondary);
     transition: all var(--transition-fast);
 }
 
 .filter-btn:hover {
     color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .filter-btn.active {
-    color: var(--text-primary);
-    background: var(--bg-tertiary);
+    color: #d9f6ff;
+    background: linear-gradient(135deg, rgba(41, 185, 242, 0.26), rgba(59, 211, 142, 0.2));
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
 .diff-dot {
     width: 8px;
     height: 8px;
-    border-radius: 50%;
+    border-radius: 999px;
 }
 
 .diff-dot--easy {
@@ -173,61 +182,59 @@
 }
 
 .tag-filter {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-xs);
-    width: 100%;
 }
 
 .tag-filter-btn {
-    padding: 3px 10px;
-    border-radius: var(--radius-sm);
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(144, 169, 196, 0.26);
+    background: rgba(16, 30, 45, 0.65);
+    color: var(--text-secondary);
     font-size: 0.78rem;
-    font-weight: 500;
-    color: var(--text-muted);
-    background: var(--bg-card);
-    border: 1px solid rgba(255, 255, 255, 0.04);
+    font-weight: 600;
     transition: all var(--transition-fast);
 }
 
 .tag-filter-btn:hover {
-    color: var(--accent-purple);
-    border-color: rgba(167, 139, 250, 0.2);
+    color: #c9edff;
+    border-color: rgba(41, 185, 242, 0.45);
 }
 
 .tag-filter-btn.active {
-    color: var(--accent-purple);
-    background: rgba(167, 139, 250, 0.1);
-    border-color: rgba(167, 139, 250, 0.25);
+    color: #d9f6ff;
+    border-color: rgba(41, 185, 242, 0.55);
+    background: rgba(41, 185, 242, 0.2);
 }
 
-/* 题目列表 */
 .problem-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
+    gap: 11px;
 }
 
 .problem-card {
     display: grid;
-    grid-template-columns: 36px 1fr auto auto;
+    grid-template-columns: 38px minmax(0, 1fr) auto auto;
     align-items: center;
     gap: var(--space-md);
-    padding: var(--space-md) var(--space-lg);
-    background: var(--bg-card);
-    border: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 16px 18px;
     border-radius: var(--radius-md);
+    border: 1px solid rgba(144, 169, 196, 0.2);
+    background: linear-gradient(140deg, rgba(16, 30, 45, 0.9), rgba(12, 24, 37, 0.82));
     cursor: pointer;
-    transition: all var(--transition-normal);
     opacity: 0;
-    animation: fadeInUp 0.4s ease forwards;
+    animation: fadeInUp 0.42s ease forwards;
+    transition: transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
 }
 
 .problem-card:hover {
-    background: var(--bg-card-hover);
-    border-color: rgba(0, 245, 160, 0.1);
-    transform: translateX(4px);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    border-color: rgba(41, 185, 242, 0.42);
+    background: linear-gradient(140deg, rgba(20, 37, 55, 0.95), rgba(14, 28, 42, 0.9));
 }
 
 .problem-card__status {
@@ -237,31 +244,35 @@
 }
 
 .problem-card__info {
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 3px;
-    min-width: 0;
+    gap: 5px;
 }
 
 .problem-card__title {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
-    font-weight: 600;
     font-size: 0.95rem;
+    font-weight: 600;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .problem-card__id {
     color: var(--text-muted);
     font-family: var(--font-mono);
     font-size: 0.8rem;
-    font-weight: 500;
+    flex-shrink: 0;
 }
 
 .problem-card__tags {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-xs);
+    gap: 6px;
 }
 
 .problem-card__difficulty {
@@ -270,37 +281,51 @@
 }
 
 .problem-card__actions {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
+    color: var(--text-muted);
+    font-size: 0.82rem;
 }
 
 .problem-card__arrow {
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    transition: all var(--transition-fast);
+    display: inline-block;
+    transition: transform var(--transition-fast), color var(--transition-fast);
 }
 
 .problem-card:hover .problem-card__arrow {
-    color: var(--accent-green);
-    transform: translateX(4px);
+    transform: translateX(3px);
+    color: #c9edff;
 }
 
-/* 响应式 */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .hero-section {
-        flex-direction: column;
-        text-align: center;
+        grid-template-columns: 1fr;
         gap: var(--space-lg);
     }
 
+    .stats-cards {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 18px;
+        margin-bottom: var(--space-lg);
+    }
+
     .hero-subtitle {
-        max-width: 100%;
+        max-width: none;
+        font-size: 0.9rem;
     }
 
     .stats-cards {
         width: 100%;
-        justify-content: center;
+        gap: 10px;
+    }
+
+    .stat-card {
+        flex: 1;
+        min-width: 92px;
     }
 
     .filter-section {
@@ -309,7 +334,7 @@
     }
 
     .search-box {
-        max-width: 100%;
+        max-width: none;
     }
 
     .filter-group {
@@ -317,8 +342,8 @@
     }
 
     .problem-card {
-        grid-template-columns: 28px 1fr auto;
-        padding: var(--space-md);
+        grid-template-columns: 34px minmax(0, 1fr) auto;
+        padding: 14px;
     }
 
     .problem-card__actions {

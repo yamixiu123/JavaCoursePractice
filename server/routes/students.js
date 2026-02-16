@@ -36,7 +36,9 @@ router.get('/', (req, res) => {
 
 /** 创建学生 */
 router.post('/', (req, res) => {
-    const { username, password, displayName } = req.body;
+    const username = typeof req.body.username === 'string' ? req.body.username.trim() : '';
+    const password = typeof req.body.password === 'string' ? req.body.password : '';
+    const displayName = typeof req.body.displayName === 'string' ? req.body.displayName.trim() : '';
 
     if (!username || !password || !displayName) {
         return res.status(400).json({ error: '用户名、密码和姓名不能为空' });
@@ -46,8 +48,16 @@ router.post('/', (req, res) => {
         return res.status(400).json({ error: '用户名长度 2-30 个字符' });
     }
 
-    if (password.length < 4) {
-        return res.status(400).json({ error: '密码至少 4 个字符' });
+    if (!/^[a-zA-Z0-9_.-]+$/.test(username)) {
+        return res.status(400).json({ error: '用户名仅支持字母、数字、下划线、点和短横线' });
+    }
+
+    if (displayName.length > 50) {
+        return res.status(400).json({ error: '姓名长度不能超过 50 个字符' });
+    }
+
+    if (password.length < 8) {
+        return res.status(400).json({ error: '密码至少 8 个字符' });
     }
 
     const db = getDb();
@@ -72,7 +82,10 @@ router.post('/', (req, res) => {
 /** 删除学生 */
 router.delete('/:id', (req, res) => {
     const db = getDb();
-    const id = Number(req.params.id);
+    const id = parsePositiveInt(req.params.id);
+    if (!id) {
+        return res.status(400).json({ error: '用户 id 无效' });
+    }
 
     const user = db.prepare('SELECT role FROM users WHERE id = ?').get(id);
     if (!user) {
@@ -89,7 +102,10 @@ router.delete('/:id', (req, res) => {
 /** 获取学生详细进度 */
 router.get('/:id/progress', (req, res) => {
     const db = getDb();
-    const userId = Number(req.params.id);
+    const userId = parsePositiveInt(req.params.id);
+    if (!userId) {
+        return res.status(400).json({ error: '用户 id 无效' });
+    }
 
     const user = db.prepare('SELECT id, username, display_name FROM users WHERE id = ?').get(userId);
     if (!user) {
@@ -126,3 +142,11 @@ router.get('/:id/progress', (req, res) => {
 });
 
 module.exports = router;
+
+function parsePositiveInt(value) {
+    const num = Number(value);
+    if (!Number.isInteger(num) || num <= 0) {
+        return null;
+    }
+    return num;
+}

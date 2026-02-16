@@ -3,7 +3,7 @@
  */
 import { problems } from './problems.js';
 import { getSolvedSet, getHistory, getDailyCountMap } from './storage.js';
-import { getMyProgress, requireStudentAuth } from './api.js';
+import { getMyProgress, requireStudentAuth, logout } from './api.js';
 
 let solvedSet = new Set();
 let historyList = [];
@@ -13,6 +13,7 @@ async function init() {
     const user = requireStudentAuth();
     if (!user) return;
 
+    setupNav(user);
     await loadStatsData();
     renderOverview();
     renderDifficultyBars();
@@ -225,6 +226,18 @@ function buildDailyCountMap(history) {
         map[date] = (map[date] || 0) + 1;
     }
     return map;
+}
+
+function setupNav(user) {
+    const navUser = document.getElementById('nav-user');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    if (navUser) {
+        navUser.textContent = user.displayName || user.username || '学生';
+    }
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', logout);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', init);

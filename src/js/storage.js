@@ -9,6 +9,7 @@ const STORAGE_KEYS = {
     HISTORY: 'javaoj_history',
     CODE: 'javaoj_code',
 };
+const AUTH_USER_STORAGE_KEY = 'javaoj_user';
 
 /**
  * 获取已通过的题目 ID 集合
@@ -16,7 +17,7 @@ const STORAGE_KEYS = {
  */
 export function getSolvedSet() {
     try {
-        const data = localStorage.getItem(STORAGE_KEYS.SOLVED);
+        const data = readScopedJson(STORAGE_KEYS.SOLVED, []);
         return new Set(data ? JSON.parse(data) : []);
     } catch {
         return new Set();
@@ -30,7 +31,7 @@ export function getSolvedSet() {
 export function markSolved(problemId) {
     const solved = getSolvedSet();
     solved.add(problemId);
-    localStorage.setItem(STORAGE_KEYS.SOLVED, JSON.stringify([...solved]));
+    writeScopedJson(STORAGE_KEYS.SOLVED, [...solved]);
 }
 
 /**
@@ -39,7 +40,7 @@ export function markSolved(problemId) {
  */
 export function getAttemptedSet() {
     try {
-        const data = localStorage.getItem(STORAGE_KEYS.ATTEMPTS);
+        const data = readScopedJson(STORAGE_KEYS.ATTEMPTS, []);
         return new Set(data ? JSON.parse(data) : []);
     } catch {
         return new Set();
@@ -53,7 +54,7 @@ export function getAttemptedSet() {
 export function markAttempted(problemId) {
     const attempts = getAttemptedSet();
     attempts.add(problemId);
-    localStorage.setItem(STORAGE_KEYS.ATTEMPTS, JSON.stringify([...attempts]));
+    writeScopedJson(STORAGE_KEYS.ATTEMPTS, [...attempts]);
 }
 
 /**
@@ -66,7 +67,7 @@ export function addHistory(entry) {
         history.unshift(entry);
         // 最多保存 200 条
         if (history.length > 200) history.length = 200;
-        localStorage.setItem(STORAGE_KEYS.HISTORY, JSON.stringify(history));
+        writeScopedJson(STORAGE_KEYS.HISTORY, history);
     } catch {
         // 存储空间不足时忽略
     }
@@ -78,7 +79,7 @@ export function addHistory(entry) {
  */
 export function getHistory() {
     try {
-        const data = localStorage.getItem(STORAGE_KEYS.HISTORY);
+        const data = readScopedJson(STORAGE_KEYS.HISTORY, []);
         return data ? JSON.parse(data) : [];
     } catch {
         return [];
@@ -94,7 +95,7 @@ export function saveCode(problemId, code) {
     try {
         const codeMap = getCodeMap();
         codeMap[problemId] = code;
-        localStorage.setItem(STORAGE_KEYS.CODE, JSON.stringify(codeMap));
+        writeScopedJson(STORAGE_KEYS.CODE, codeMap);
     } catch {
         // 忽略
     }
@@ -112,7 +113,7 @@ export function getSavedCode(problemId) {
 
 function getCodeMap() {
     try {
-        const data = localStorage.getItem(STORAGE_KEYS.CODE);
+        const data = readScopedJson(STORAGE_KEYS.CODE, {});
         return data ? JSON.parse(data) : {};
     } catch {
         return {};
@@ -131,4 +132,41 @@ export function getDailyCountMap() {
         map[date] = (map[date] || 0) + 1;
     }
     return map;
+}
+
+function writeScopedJson(baseKey, value) {
+    const key = getScopedStorageKey(baseKey);
+    localStorage.setItem(key, JSON.stringify(value));
+}
+
+function readScopedJson(baseKey, fallbackValue) {
+    const scopedKey = getScopedStorageKey(baseKey);
+    const scoped = localStorage.getItem(scopedKey);
+    if (scoped !== null) return scoped;
+
+    // 向后兼容：如果旧版未分用户，首次读取时迁移到当前用户命名空间
+    const legacy = localStorage.getItem(baseKey);
+    if (legacy === null) {
+        return JSON.stringify(fallbackValue);
+    }
+    localStorage.setItem(scopedKey, legacy);
+    return legacy;
+}
+
+function getScopedStorageKey(baseKey) {
+    const userScope = getUserScope();
+    return `${baseKey}:${userScope}`;
+}
+
+function getUserScope() {
+    try {
+        const raw = localStorage.getItem(AUTH_USER_STORAGE_KEY);
+        if (!raw) return 'anonymous';
+        const user = JSON.parse(raw);
+        if (user && user.id) return `u${user.id}`;
+        if (user && user.username) return `name:${String(user.username)}`;
+        return 'anonymous';
+    } catch {
+        return 'anonymous';
+    }
 }

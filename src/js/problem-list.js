@@ -3,7 +3,7 @@
  */
 import { problems, getAllTags } from './problems.js';
 import { getSolvedSet, getAttemptedSet } from './storage.js';
-import { getMyProgress, requireStudentAuth } from './api.js';
+import { getMyProgress, requireStudentAuth, logout } from './api.js';
 
 let currentDifficulty = 'all';
 let currentTag = null;
@@ -16,6 +16,7 @@ async function init() {
     const user = requireStudentAuth();
     if (!user) return;
 
+    setupNav(user);
     await loadProgressState();
     renderStats();
     renderTagFilter();
@@ -128,6 +129,18 @@ function renderProblemList() {
 
 function difficultyLabel(diff) {
     return { easy: '简单', medium: '中等', hard: '困难' }[diff] || diff;
+}
+
+function setupNav(user) {
+    const navUser = document.getElementById('nav-user');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    if (navUser) {
+        navUser.textContent = user.displayName || user.username || '学生';
+    }
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', logout);
+    }
 }
 
 /** 绑定事件 */

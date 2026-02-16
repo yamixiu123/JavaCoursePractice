@@ -2,9 +2,28 @@
  * JWT 认证中间件
  */
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'javaoj_secret_key_2026';
+const JWT_SECRET = resolveJwtSecret();
 const JWT_EXPIRES_IN = '24h';
+
+function resolveJwtSecret() {
+    const fromEnv = (process.env.JWT_SECRET || '').trim();
+    if (fromEnv) {
+        if (fromEnv.length < 32) {
+            console.warn('⚠️ JWT_SECRET 长度建议至少 32 字符。');
+        }
+        return fromEnv;
+    }
+
+    if (process.env.NODE_ENV === 'production') {
+        throw new Error('生产环境必须配置 JWT_SECRET 环境变量。');
+    }
+
+    const tempSecret = crypto.randomBytes(48).toString('hex');
+    console.warn('⚠️ JWT_SECRET 未配置，已使用临时随机密钥（服务重启后旧 token 会失效）。');
+    return tempSecret;
+}
 
 /**
  * 签发 JWT

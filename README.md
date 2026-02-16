@@ -75,7 +75,17 @@ npm run build
 
 已在当前仓库验证可成功构建，产物输出到 `dist/`。
 
-### 4.4 前后端同时调试（推荐）
+### 4.4 API 烟雾测试（需后端已启动）
+
+```bash
+# Windows PowerShell
+$env:ADMIN_PASSWORD='你的管理员密码'; npm run test:smoke
+
+# macOS/Linux
+ADMIN_PASSWORD='你的管理员密码' npm run test:smoke
+```
+
+### 4.5 前后端同时调试（推荐）
 
 一条命令启动前后端：
 
@@ -128,25 +138,52 @@ npm run dev
 
 数据库文件：`data/javaoj.db`（首次启动自动创建）
 
-如果当前磁盘环境不支持 SQLite WAL 或主库不可写，后端会自动回退：
+默认采用固定路径模式（不自动切库），避免“账号在 A 库，服务连到 B 库”的问题。
 
-1. 回退为 `DELETE` journal 模式
-2. 尝试切换到本地目录数据库
-3. 仍失败时使用内存数据库（`":memory:"`，重启后数据会丢失）
+- 固定路径：`data/javaoj.db`
+- 可选回退模式：设置 `JAVAOJ_ENABLE_DB_FALLBACK=1` 后，才会允许回退到
+  - `os.tmpdir()/javaoj/javaoj_safe.db`
+  - `:memory:`
 
 可通过环境变量指定数据库路径：
 
-- `JAVAOJ_DB_PATH=你的绝对路径`
+- `JAVAOJ_DB_PATH=你的数据库路径`（支持绝对路径或相对项目根目录）
+
+### 7.1 临时库迁移回主库
+
+如果历史数据写到了临时库，可执行：
+
+```bash
+npm run db:migrate:temp
+```
+
+可选参数：
+
+```bash
+node scripts/migrate-db.cjs --from "源库路径" --to "目标库路径"
+node scripts/migrate-db.cjs --force   # 覆盖目标库且不备份
+```
+
+迁移前请先停止后端服务，避免文件占用。
 
 主要表：
 
 - `users`：用户（管理员/学生）
 - `submissions`：提交记录（关联 `users.id`）
 
-默认管理员账户（首次初始化自动写入）：
+管理员初始化（首次建库）：
 
-- 用户名：`admin`
-- 密码：`admin123`
+- 默认用户名：`admin`（可由 `JAVAOJ_ADMIN_USERNAME` 覆盖）
+- 密码：必须满足至少 8 位
+- 推荐显式配置：`JAVAOJ_ADMIN_PASSWORD=你的强密码`
+- 开发环境未配置 `JAVAOJ_ADMIN_PASSWORD` 时，会自动生成一次性临时密码并打印到控制台
+
+安全相关环境变量：
+
+- `JWT_SECRET`：JWT 签名密钥（生产环境必填，建议 >= 32 字符）
+- `CORS_ORIGIN`：允许的跨域来源，逗号分隔（例如 `http://localhost:5173,http://127.0.0.1:5173`）
+- `JAVAOJ_DB_PATH`：自定义 SQLite 路径
+- `JAVAOJ_ENABLE_DB_FALLBACK`：是否开启数据库回退（`1` 开启，默认关闭）
 
 ## 8. 当前实现特点与限制
 

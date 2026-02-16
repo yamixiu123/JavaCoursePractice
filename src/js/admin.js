@@ -106,6 +106,11 @@ async function handleCreate(e) {
         return;
     }
 
+    if (password.length < 8) {
+        errorEl.textContent = '密码至少 8 个字符';
+        return;
+    }
+
     try {
         await createStudent(username, password, displayName);
         successEl.textContent = `✅ 学生 ${displayName} 创建成功！`;

@@ -11,7 +11,7 @@ function resolveApiBase() {
         return customBase.replace(/\/+$/, '');
     }
 
-    const { protocol, hostname, port } = window.location;
+    const { protocol, port } = window.location;
 
     // Vite 开发环境（使用 /api 代理）
     if (port === '5173') return '/api';
@@ -20,8 +20,8 @@ function resolveApiBase() {
     // file:// 打开页面时无法走代理，直接连本地后端
     if (protocol === 'file:') return 'http://127.0.0.1:3000/api';
 
-    // 其他端口（例如静态服务器）下，默认回退本地后端
-    return `${protocol}//${hostname || '127.0.0.1'}:3000/api`;
+    // 生产环境（含 Cloudflare/Nginx 反代）统一走同源 /api
+    return '/api';
 }
 
 /**
